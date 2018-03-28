@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Pomodoro Today</title>
+  <link href="style.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Roboto|Roboto+Mono:400,700" rel="stylesheet">
+  <script src="jquery-3.3.1.min.js"></script>
+  <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+  <script src="script.js"></script>
+</head>
+<body>
+  <header class="row">
+    <button type="button" name="PomodoroReset" id="PomodoroReset" class="btn-icon pull-right" title="clear">
+      <i class="far fa-trash-alt"></i>
+    </button>
+    <h3></i>Pomodoro Today</h3>
+  </header>
+
+  <div id="pomodoro">
+    <div class="col-4 row">
+      <div class="list-container" id="topThree">
+        <div class="header"><h2>Top 3 Priorities</h2></div>
+        <input type="text" placeholder="Add">
+        <ul class="pomodoroList"></ul>
+      </div>
+      <div class="list-container" id="todo">
+        <div class="header"><h2>To do</h2></div>
+        <input type="text" placeholder="Add">
+        <ul class="pomodoroList"></ul>
+      </div>
+      <div class="list-container" id="appt">
+        <div class="header"><h2>Appointments & Meetings</h2></div>
+        <input type="text" placeholder="Add">
+        <ul class="pomodoroList"></ul>
+      </div>
+      <div class="list-container" id="email">
+        <div class="header"><h2>Email & Phone</h2></div>
+        <input type="text" placeholder="Add">
+        <ul class="pomodoroList"></ul>
+      </div>
+    </div>
+
+    <div class="col-4 row">
+
+      <div class="list-container" id="chores">
+        <div class="header"><h2>Chores</h2></div>
+        <input type="text" placeholder="Add">
+        <ul class="pomodoroList"></ul>
+      </div>
+      <div class="list-container" id="tmr">
+        <div class="header"><h2>This can wait until tmr</h2></div>
+        <input type="text" placeholder="Add">
+        <ul class="pomodoroList"></ul>
+      </div>
+      <div class="list-container" id="idea">
+        <div class="header"><h2>Ideas/Plans</h2></div>
+        <input type="text" placeholder="Add">
+        <ul class="pomodoroList"></ul>
+      </div>
+      <div class="list-container" id="goodThing">
+        <div class="header"><h2>Good things of today</h2></div>
+        <input type="text" placeholder="Add">
+        <ul class="pomodoroList"></ul>
+      </div>
+
+    </div>
+
+    <div class="col-4 row">
+
+      <div class="list-container" id="drinkList">
+        <div class="header"><h2 style="text-transform: uppercase;">h2o!</h2></div>
+        <ul class="pomodoroList">
+          <li><i class="fas fa-beer"></i></li>
+          <li><i class="fas fa-beer"></i></li>
+          <li><i class="fas fa-beer"></i></li>
+          <li><i class="fas fa-beer"></i></li>
+          <li><i class="fas fa-beer"></i></li>
+          <li><i class="fas fa-beer"></i></li>
+          <li><i class="fas fa-beer"></i></li>
+          <li><i class="fas fa-beer"></i></li>
+        </ul>
+      </div>
+      <div class="list-container" id="eatList">
+        <div class="header"><h2>food!</h2></div>
+        <div class="col-4 list-container" id="eatListB">
+          <div class="sub-header">B</div>
+          <input type="text" placeholder="+">
+          <ul class="pomodoroList"></ul>
+        </div>
+        <div class="col-4 list-container" id="eatListL">
+          <div class="sub-header">L</div>
+          <input type="text" placeholder="+">
+          <ul class="pomodoroList"></ul>
+        </div>
+        <div class="col-4 list-container" id="eatListD">
+          <div class="sub-header">D</div>
+          <input type="text" placeholder="+">
+          <ul class="pomodoroList"></ul>
+        </div>
+      </div>
+
+      <div class="list-container" id="fitness">
+        <div class="header"><h2>Fitness & Exercise</h2></div>
+        <input type="text" placeholder="Add">
+        <ul class="pomodoroList"></ul>
+      </div>
+
+    </div>
+  </div>
+
+  <footer></footer>
+</body>
+</html>

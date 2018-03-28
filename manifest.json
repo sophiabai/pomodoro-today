@@ -1,0 +1,22 @@
+{
+  "manifest_version": 2,
+
+  "name": "Pomodoro Today",
+  "description": "Get things done.",
+  "version": "1.0",
+
+  "browser_action": {
+    "default_icon": {
+      "128": "icon.png"
+    },
+    "default_popup": "pomodoro.html"
+  },
+  "permissions": [
+    "activeTab",
+    "storage"
+  ],
+  "content_scripts": [{
+  "js": [ "jquery-3.3.1.min.js", "script.js" ],
+  "matches": [ "http://*/*", "https://*/*"]
+  }]
+}
