@@ -6,12 +6,12 @@ const STATUS_TODO = 0;
 const STATUS_DONE = 1;
 
 $(function() {
-  $("li").not("#drinkList li").append("<span class='close'>\u00D7</span>");
+  // $("li").not("#drinkList li").append("<span class='close'>\u00D7</span>");
 
   $("input").attr("autocomplete", "off");
   $("input").css("font-family", "'FontAwesome','Roboto Mono', monospace");
   $("input").after("<span class='addBtn'></span>");
-  $("#eatList .addBtn").hide();
+  $("#eatList .addBtn").remove();
 
   // drinking list
   $("#drinkList").on('click', 'li', function(e){
@@ -96,17 +96,33 @@ $(function() {
 
   // reset
   $("#PomodoroReset").on("click", function() {
-    $(".close").click();
-    $("#drinkList li.checked").click();
+    resetData();
+    location.reload();
   });
 
-  $(".addBtn").click(function() {
-    var _val = $(this).siblings("input").val();
-    $(this).siblings("ul").prepend("<li class='checkable'><span>" + _val + "</span><span class='close'>\u00D7</span></li>");
-    $(this).siblings("input").val("");
+  $(document).on('click', '.addBtn', function() {
+    saveElementValue($(this).siblings('input'));
+  });
+
+  $(document).on('keypress', 'input', function(event) {
+    if (event.which == 13) {
+      saveElementValue(this);
+    }
+  });
+
+  var saveElementValue = function(inputEle) {
+    var _val = $(inputEle).val().trim();
+    $(inputEle).val("");
+
+    if (_val.length === 0)
+    {
+      return;
+    }
+
+    $(inputEle).siblings("ul").prepend("<li class='checkable'><span>" + _val + "</span><span class='close'>\u00D7</span></li>");
 
     // modify data
-    var key = $(this).parent().get(0).id;
+    var key = $(inputEle).parent().get(0).id;
     var existingList = getData(key);
 
     if (!existingList)
@@ -116,13 +132,7 @@ $(function() {
     var newEntry = {'value': _val, 'status': STATUS_TODO};
     existingList.unshift(newEntry);
     saveData(key, existingList);
-  });
-
-  $("input").keypress(function(event) {
-    if (event.which == 13) {
-      $(this).siblings(".addBtn").click();
-    }
-  });
+  };
 
   // load values from storage on page load
   var drinkingNum = getData(drinkingNumKey);
@@ -192,5 +202,16 @@ var getData = function(key) {
     chrome.storage.local.get(key, function(result) {
       return JSON.parse(result);
     });
+  }
+};
+
+var resetData = function() {
+  if (localStorage)
+  {
+    localStorage.clear();
+  }
+  else
+  {
+    chrome.storage.local.clear(function(result) {});
   }
 };
