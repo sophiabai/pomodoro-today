@@ -301,6 +301,34 @@ ul {
   color: white;
 }
 
+.caloriePlus {
+  position: absolute;
+	width: 42px;
+  right: 0;
+  top: 0;
+  padding: 12px 16px 12px 16px;
+}
+
+.calorieMinus {
+  position: absolute;
+	width: 42px;
+  left: 0;
+  top: 0;
+  padding: 12px 16px 12px 16px;
+}
+
+.calorieMinus:hover, .caloriePlus:hover {
+  background-color: salmon;
+  color: white;
+}
+
+.totalCalories {
+	position: absolute;
+	left: 26px;
+	right: 26px;
+	text-align: center;
+}
+
 .header {
   background-color: white;
   padding: 30px 40px;

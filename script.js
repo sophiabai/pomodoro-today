@@ -1,4 +1,7 @@
 const drinkingNumKey = 'drinkingNum';
+const eatListIds = ['eatListB', 'eatListL', 'eatListD'];
+const eatListKeyPostFix = '_total';
+const eatCaloriesSpan = 100;
 const STATUS_TODO = 0;
 const STATUS_DONE = 1;
 
@@ -20,8 +23,33 @@ $(function() {
     saveData(drinkingNumKey, drinkingNum);
   });
 
+  // eat list
+  $("#eatList").on('click', '.calorieMinus', function(e){
+    e.preventDefault();
+    e.stopPropagation();
+
+    var eatListId = $(this).closest('.list-container').attr('id');
+    var totalCaloriesContainer = $(this).siblings('.totalCalories');
+    var totalCalories = parseInt(totalCaloriesContainer.text());
+    var newCalories = Math.max(0, totalCalories - eatCaloriesSpan);
+    totalCaloriesContainer.text(newCalories);
+    saveData(eatListId + eatListKeyPostFix, newCalories);
+  });
+  
+  $("#eatList").on('click', '.caloriePlus', function(e){
+    e.preventDefault();
+    e.stopPropagation();
+
+    var eatListId = $(this).closest('.list-container').attr('id');
+    var totalCaloriesContainer = $(this).siblings('.totalCalories');
+    var totalCalories = parseInt(totalCaloriesContainer.text());
+    var newCalories = totalCalories + eatCaloriesSpan;
+    totalCaloriesContainer.text(newCalories);
+    saveData(eatListId + eatListKeyPostFix, newCalories);
+  });
+  
   // others
-  $(document).on('click', 'li', function(e) {
+  $(document).on('click', 'li.checkable', function(e) {
     e.preventDefault();
     e.stopPropagation();
 
@@ -74,7 +102,7 @@ $(function() {
 
   $(".addBtn").click(function() {
     var _val = $(this).siblings("input").val();
-    $(this).siblings("ul").prepend("<li><span>" + _val + "</span><span class='close'>\u00D7</span></li>");
+    $(this).siblings("ul").prepend("<li class='checkable'><span>" + _val + "</span><span class='close'>\u00D7</span></li>");
     $(this).siblings("input").val("");
 
     // modify data
@@ -117,12 +145,26 @@ $(function() {
         for (var j = 0; j < list.length; j++)
         {
           var entry = list[j];
-          $("#" + key).children("ul").append("<li class='" + (entry.status == STATUS_TODO ? "" : "checked") + "'><span>" + entry.value + "</span><span class='close'>\u00D7</span></li>");
+          $("#" + key).children("ul").append("<li class='checkable " + (entry.status == STATUS_TODO ? "" : "checked") + "'><span>" + entry.value + "</span><span class='close'>\u00D7</span></li>");
         }
       }
     }
+    // special treatment for eat lists
+    loadEatListTotalCalories(key);
   }
 });
+
+var loadEatListTotalCalories = function(eatListId) {
+  if (eatListIds.indexOf(eatListId) !== -1)
+  {
+    var totalCalories = parseInt(getData(eatListId + eatListKeyPostFix));
+    if (isNaN(totalCalories))
+    {
+      totalCalories = 0;
+    }
+    $("#" + eatListId).children("ul").append("<li><span class='calorieMinus'>-</span><span class='totalCalories'>" + totalCalories + "</span><span class='caloriePlus'>+</span></li>");
+  }
+};
 
 var saveData = function(key, value) {
   value = JSON.stringify(value);
