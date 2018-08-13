@@ -162,6 +162,42 @@ $(function() {
     // special treatment for eat lists
     loadEatListTotalCalories(key);
   }
+
+  var saveListWithCurrentState = function(listId) {
+    // save current data list
+    var $newListElements = $('#' + listId).find('.pomodoroList li');
+    var newList = [];
+
+    for (var i = 0; i < $newListElements.length; i++)
+    {
+      var $listItem = $newListElements.eq(i);
+      var val = $listItem.children("span").eq(0).text();
+      var status = $listItem.hasClass('checked') ? STATUS_DONE : STATUS_TODO;
+      var newEntry = {'value': val, 'status': status};
+      newList.push(newEntry);
+    }
+    
+    saveData(listId, newList);
+  };
+
+  $('.draggable').sortable({
+    connectWith: '.draggable',
+    cursor: 'move',
+    start: function(e, ui) {
+      // creates a temporary attribute on the element with the original list id
+      $(this).attr('data-originallistid', ui.item.closest('.list-container').attr('id'));
+    },
+    update: function(e, ui) {
+        // gets the new and original list id then removes the temporary attribute
+        var newListId = ui.item.closest('.list-container').attr('id');
+        var originalListId = $(this).attr('data-originallistid');
+        $(this).removeAttr('data-originallistid');
+        saveListWithCurrentState(originalListId);
+        saveListWithCurrentState(newListId);
+    },
+    // containment: "document",
+  }).disableSelection();
+
 });
 
 var loadEatListTotalCalories = function(eatListId) {
@@ -215,3 +251,4 @@ var resetData = function() {
     chrome.storage.local.clear(function(result) {});
   }
 };
+

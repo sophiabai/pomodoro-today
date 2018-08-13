@@ -212,7 +212,7 @@ ul {
   padding: 12px 8px 12px 40px;
   list-style-type: none;
   font-size: 18px;
-  transition: 0.2s;
+  /* transition: 0.2s; */
   float: left;
   width: 100%;
 	min-height: 53px;
@@ -367,6 +367,13 @@ ul {
 .addBtn:hover {
   background-color: salmon;
 	color: white;
+}
+
+.draggable {
+	float: left; 	/* to be compatible with sortable since parent container is floating, i.e. col-4 row */
+	position: relative;
+	width: 100%;
+	min-height: 5px;
 }
 
 footer {
